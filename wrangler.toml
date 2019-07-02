@@ -1,0 +1,6 @@
+account_id = ""
+name = "image-worker"
+private = false
+route = "/image"
+type = "rust"
+zone_id = ""
