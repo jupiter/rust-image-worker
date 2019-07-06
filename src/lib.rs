@@ -5,7 +5,11 @@ mod image;
 mod utils;
 
 use cfg_if::cfg_if;
+use serde_wasm_bindgen::from_value;
 use wasm_bindgen::prelude::*;
+
+#[macro_use]
+extern crate serde_derive;
 
 cfg_if! {
     // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -17,7 +21,7 @@ cfg_if! {
     }
 }
 
-pub fn string_to_transform_mode(
+fn string_to_transform_mode(
     mode_string: &str,
     width: Option<u32>,
     height: Option<u32>,
@@ -50,20 +54,42 @@ pub fn string_to_transform_mode(
     }
 }
 
+fn positive_int_value(value: u32) -> Option<u32> {
+    if value > 0 {
+        Some(value)
+    } else {
+        None
+    }
+}
+
+#[derive(Serialize, Deserialize)]
+struct ProcessImageParams {
+    format: String,
+    width: u32,
+    height: u32,
+    dx: f32,
+    dy: f32,
+    scale: f32,
+    mode: String,
+}
+
 #[wasm_bindgen]
-pub fn convert_image(buffer: &[u8]) -> Result<Vec<u8>, JsValue> {
+pub fn process_image(buffer: &[u8], params_value: JsValue) -> Result<Vec<u8>, JsValue> {
     console_error_panic_hook::set_once();
+
+    let params: ProcessImageParams = from_value(params_value)?;
+
+    let transform_mode = string_to_transform_mode(
+        &params.mode,
+        positive_int_value(params.width),
+        positive_int_value(params.height),
+    )
+    .map_err(|e| JsValue::from_str(&e.to_string()))?;
 
     let mut image = image::load(buffer).map_err(|e| JsValue::from(e.to_string()))?;
     let image_size = image::size(&image);
 
-    let transform = image::Transform::new(
-        &image_size,
-        image::TransformMode::Limit {
-            width: image_size.height.min(image_size.width),
-            height: image_size.height.min(image_size.width),
-        },
-    );
+    let transform = image::Transform::new(&image_size, transform_mode);
 
     let output =
         image::process(&mut image, &transform).map_err(|e| JsValue::from_str(&e.to_string()))?;
