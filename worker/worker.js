@@ -47,7 +47,9 @@ async function handleRequest(req) {
     res.headers.set("Content-type", "image/png");
 
     cache.put(req, res.clone());
-    cache.put(originReq, originResToCache);
+    if (originResToCache) {
+      cache.put(originReq, originResToCache);
+    }
   } catch (e) {
     res = new Response(e.toString(), { status: 200 });
     res.headers.set("Content-type", "text/plain");

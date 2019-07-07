@@ -89,7 +89,10 @@ pub fn process_image(buffer: &[u8], params_value: JsValue) -> Result<Vec<u8>, Js
     let mut image = image::load(buffer).map_err(|e| JsValue::from(e.to_string()))?;
     let image_size = image::size(&image);
 
-    let transform = image::Transform::new(&image_size, transform_mode);
+    let mut transform = image::Transform::new(&image_size, transform_mode);
+    transform.relative_center_offset.dx = params.dx;
+    transform.relative_center_offset.dy = params.dy;
+    transform.scale = params.scale;
 
     let output =
         image::process(&mut image, &transform).map_err(|e| JsValue::from_str(&e.to_string()))?;

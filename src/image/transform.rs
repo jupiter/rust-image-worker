@@ -33,8 +33,8 @@ pub struct Dimensions {
 
 #[derive(PartialEq, Debug)]
 pub struct PixelCoords {
-    pub x: i64,
-    pub y: i64,
+    pub x: i32,
+    pub y: i32,
 }
 
 #[derive(PartialEq, Debug)]
@@ -184,8 +184,8 @@ impl Transform {
                 height: output_dimensions.size.height.round() as u32,
             },
             origin: PixelCoords {
-                x: output_dimensions.origin.x.round() as i64,
-                y: output_dimensions.origin.y.round() as i64,
+                x: output_dimensions.origin.x.round() as i32,
+                y: output_dimensions.origin.y.round() as i32,
             },
         }
     }
@@ -276,6 +276,33 @@ mod test {
                 size: Size {
                     width: 26.666668,
                     height: 40.0
+                }
+            }
+        );
+    }
+
+    #[test]
+    fn square_input_and_landscape_canvas() {
+        let transform = Transform::new(
+            &PixelSize {
+                width: 300,
+                height: 300,
+            },
+            TransformMode::Fill {
+                width: 200,
+                height: 100,
+            },
+        );
+
+        let output_dimensions = transform.get_output_dimensions();
+
+        assert_eq!(
+            output_dimensions,
+            Dimensions {
+                origin: Coords { x: 0.0, y: -50.0 },
+                size: Size {
+                    width: 200.0,
+                    height: 200.0
                 }
             }
         );

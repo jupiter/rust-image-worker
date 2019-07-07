@@ -6,3 +6,5 @@ bin/
 pkg/
 wasm-pack.log
 worker/generated/
+
+tests/output/
