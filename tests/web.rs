@@ -1,4 +1,5 @@
 //! Test suite for the Web and headless browsers.
+// NOTE: Other tests are within the relevant source files
 
 #![cfg(target_arch = "wasm32")]
 
