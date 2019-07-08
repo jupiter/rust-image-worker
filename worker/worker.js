@@ -42,9 +42,10 @@ async function handleRequest(req) {
 
     const data = await originRes.arrayBuffer();
     const output = process_image(new Uint8Array(data), params);
+    const output_format = output.slice(-1);
 
-    res = new Response(output, { status: 200 });
-    res.headers.set("Content-type", "image/png");
+    res = new Response(output.slice(0, -1), { status: 200 });
+    res.headers.set("Content-type", getMimeType(VALID_FORMATS[output_format]));
 
     cache.put(req, res.clone());
     if (originResToCache) {
@@ -57,29 +58,43 @@ async function handleRequest(req) {
   return res;
 }
 
-const VALID_FORMATS = ["jpg", "png"];
+const VALID_FORMATS = ["png", "jpg", "jpeg"];
 const VALID_MODES = ["fill", "fit", "limit"];
 
 function getParams(req) {
   const errors = [];
   const params = {
-    errors,
-    origin: "",
-    format: "",
-    width: 0,
-    height: 0,
+    bg: [],
     dx: 0,
     dy: 0,
+    errors,
+    format: "",
+    height: 0,
+    mode: "",
+    origin: "",
+    quality: 90,
     scale: 1,
-    mode: ""
+    width: 0
   };
 
   const reqUrl = new URL(req.url);
   const searchParams = reqUrl.searchParams;
 
-  params.format = getUrlExt(reqUrl);
-  if (!VALID_FORMATS.includes(params.format)) {
-    errors.push(`image .extension must be one of ${VALID_FORMATS.join(", ")}`);
+  const format = getUrlExt(reqUrl);
+  if (format) {
+    params.format = format;
+    if (!VALID_FORMATS.includes(params.format)) {
+      errors.push(
+        `image .extension must be one of ${format} ${VALID_FORMATS.join(", ")}`
+      );
+    }
+  }
+
+  if (searchParams.has("quality")) {
+    params.quality = parseInt(searchParams.get("quality"), 10);
+    if (params.quality > 100 || params.quality < 40) {
+      errors.push("quality must be a number between 40 and 100");
+    }
   }
 
   if (searchParams.has("origin")) {
@@ -93,14 +108,14 @@ function getParams(req) {
   }
 
   if (searchParams.has("width")) {
-    params.width = parseInt(searchParams.get("width"));
+    params.width = parseInt(searchParams.get("width"), 10);
     if (!(params.width > -1)) {
       errors.push("width must be a positive number");
     }
   }
 
   if (searchParams.has("height")) {
-    params.height = parseInt(searchParams.get("height"));
+    params.height = parseInt(searchParams.get("height"), 10);
     if (!(params.height > -1)) {
       errors.push("height must be a positive number");
     }
@@ -113,7 +128,7 @@ function getParams(req) {
   if (searchParams.has("dx")) {
     params.dx = parseFloat(searchParams.get("dx"));
     if (!(params.dx >= -1 || params.dx <= 1)) {
-      errors.push("dx must be between -1.0 and 1.0 (default: 0)");
+      errors.push("dx must be a number between -1.0 and 1.0 (default: 0)");
     }
   }
 
@@ -139,10 +154,48 @@ function getParams(req) {
     errors.push(`mode must be one of ${VALID_MODES.join(", ")}`);
   }
 
+  if (searchParams.has("bg")) {
+    const bg = getColor(String(searchParams.get("bg")).toLowerCase());
+    if (bg) {
+      params.bg = bg;
+    } else {
+      errors.push("bg must be a valid hex color between 000 and ffffff");
+    }
+  }
+
   return params;
 }
 
 function getUrlExt(url) {
-  const extMatch = url.pathname.match(/[^\.]+$/);
-  return extMatch && extMatch[0].toLowerCase();
+  const extMatch = url.pathname.match(/\.(\w+)$/);
+  return extMatch && extMatch[1].toLowerCase();
+}
+
+function getColor(hexStr) {
+  if (hexStr.length === 3) {
+    hexStr = hexStr
+      .split("")
+      .map(c => c + c)
+      .join("");
+  }
+  if (hexStr.length === 6) {
+    const output = [];
+    for (let i = 0; i < 3; i++) {
+      const hex = parseInt(hexStr.slice(0, 2), 16);
+      if (hex === NaN) {
+        return;
+      }
+      output.push(hex);
+    }
+    return output;
+  }
+}
+
+function getMimeType(format) {
+  return (
+    {
+      png: "image/png",
+      jpg: "image/jpeg"
+    }[format] || "application/octet-stream"
+  );
 }
