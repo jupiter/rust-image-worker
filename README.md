@@ -38,7 +38,7 @@ The query parameters should include a combination of:
 
 - **origin**: the full _URL_ to the source image (required)
 - **mode**: one of _fill_, _fit_ and _limit_ (see below for instructions on modes)
-- **width**, **height**: the desired dimensions (both required when mode is _fill_ or _fit_, either one required for _limit_)
+- **width**, **height**: the desired dimensions (both required when mode is _fill_ or _limit_, either one or both required for _fit_)
 - **dx**, **dy**: the relative position when the image is cropped, numbers between _-1.0_ (left/top) and _1.0_ (right/bottom) (default: _0.0_, center)
 - **scale**: a positive rational number to scale the source image by (default: _1.0_)
 - **bg**: a color in [hex triplet](https://en.wikipedia.org/wiki/Web_colors#Hex_triplet) format (default: transparent)
@@ -53,9 +53,9 @@ The source image is cropped in order to ensure that the full _width_ and _height
 
 Example:
 
-[http://.../image.png?mode=fill&width=100&height=100&origin=https://.../test_pattern.png](http://factorymethod.uk/image.png?mode=fill&width=100&height=100&origin=https://raw.githubusercontent.com/jupiter/image-worker/tests/input/test_pattern.png)
+[http://.../image.png?mode=fill&width=200&height=200&origin=https://.../test_pattern.png](http://factorymethod.uk/image.png?mode=fill&width=200&height=200&origin=http://factorymethod.uk/test_pattern.png)
 
-![fill example](http://factorymethod.uk/image.png?mode=fill&width=100&height=100&origin=https://raw.githubusercontent.com/jupiter/image-worker/tests/input/test_pattern.png)
+![fill example](http://factorymethod.uk/image.png?mode=fill&width=200&height=200&origin=http://factorymethod.uk/test_pattern.png)
 
 ### Fit mode
 
@@ -65,21 +65,21 @@ The output image is exactly sized according to the given width and height, with 
 
 Example:
 
-[http://.../image.png?mode=fit&bg=666&width=100&height=100&origin=https://.../test_pattern.png](http://factorymethod.uk/image.png?bg=666&mode=fit&width=100&height=100&origin=https://raw.githubusercontent.com/jupiter/image-worker/tests/input/test_pattern.png)
+[http://.../image.png?mode=fit&bg=666&width=200&height=200&origin=https://.../test_pattern.png](http://factorymethod.uk/image.png?bg=666&mode=fit&width=200&height=200&origin=http://factorymethod.uk/test_pattern.png)
 
-![fill example](http://factorymethod.uk/image.png?bg=666&mode=fit&width=100&height=100&origin=https://raw.githubusercontent.com/jupiter/image-worker/tests/input/test_pattern.png)
+![fill example](http://factorymethod.uk/image.png?bg=666&mode=fit&width=200&height=200&origin=http://factorymethod.uk/test_pattern.png)
 
 ### Limit mode
 
-The source image is scaled to match the given _width_ or _height_.
+The source image is scaled to fit within the given _width_ and _height_.
 
 ![limit mode](docs/images/limit.png)
 
 Example:
 
-[http://.../image.png?mode=limit&width=100&origin=https://.../test_pattern.png](http://factorymethod.uk/image.png?mode=limit&width=100&origin=https://raw.githubusercontent.com/jupiter/image-worker/tests/input/test_pattern.png)
+[http://.../image.png?mode=limit&width=200&height=200&origin=https://.../test_pattern.png](http://factorymethod.uk/image.png?mode=limit&width=200&height=200&origin=http://factorymethod.uk/test_pattern.png)
 
-![limit example](http://factorymethod.uk/image.png?mode=limit&width=100&origin=https://raw.githubusercontent.com/jupiter/image-worker/tests/input/test_pattern.png)
+![limit example](http://factorymethod.uk/image.png?mode=limit&width=200&height=200&origin=http://factorymethod.uk/test_pattern.png)
 
 ## Limitations
 
