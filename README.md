@@ -49,13 +49,13 @@ The URL path should be formatted as an image filename with a file extension sign
 The query parameters should include a combination of:
 
 - **origin**: the full _URL_ to the source image (required)
-- **mode**: one of _fill_, _fit_ and _limit_ (required, see [examples](#examples) for modes)
+- **mode**: one of _fill_, _fit_ and _limit_ (required, see [modes](#modes) for examples)
 - **width**, **height**: the desired dimensions (both required when mode is _fill_ or _limit_, either one or both for _fit_)
 - **dx**, **dy**: the relative position when the image is cropped, numbers between _-1.0_ (left/top) and _1.0_ (right/bottom) (default: _0.0_, center)
 - **scale**: a positive rational number to scale the source image by (default: _1.0_)
 - **bg**: a color in [hex triplet](https://en.wikipedia.org/wiki/Web_colors#Hex_triplet) format (default: transparent)
 
-## Examples
+## Modes
 
 ### Fill mode
 
@@ -96,7 +96,20 @@ Example:
 ## Limitations
 
 - Cloudflare workers are [limited](https://developers.cloudflare.com/workers/writing-workers/resource-limits/) in the amount of CPU time they are allowed to take per request (between 5ms for free and 50ms for business/enterprise accounts). This means that large images (> 1000 pixels in width or height), sometimes run out of processing time.
-- The JPEG decoder used by the Rust crate image requires [threads](https://rustwasm.github.io/2018/10/24/multithreading-rust-and-wasm.html), which I have not yet been able to get to work.
+
+## Development
+
+To run pure Rust tests:
+
+```
+$ cargo test
+```
+
+And for a headless browser smoke test using Chrome:
+
+```
+$ wasm-pack test --headless --chrome
+```
 
 ## License
 
