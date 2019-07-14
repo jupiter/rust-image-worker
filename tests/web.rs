@@ -49,12 +49,10 @@ fn process_jpeg_image_in_browser() {
 
     assert_eq!(data.len(), 6391);
 
-    let mut array: [u8; 6391] = [0; 6391];
-    let bytes = &data[..array.len()];
-    array.copy_from_slice(bytes);
+    let bytes = &data[..data.len()];
 
     process_image(
-        &array,
+        &bytes,
         JsValue::from_serde(&ProcessImageParams {
             bg: vec![],
             dx: 0.0,
@@ -77,12 +75,10 @@ fn process_png_image_in_browser() {
 
     assert_eq!(data.len(), 2244);
 
-    let mut array: [u8; 2244] = [0; 2244];
-    let bytes = &data[..array.len()];
-    array.copy_from_slice(bytes);
+    let bytes = &data[..data.len()];
 
     process_image(
-        &array,
+        &bytes,
         JsValue::from_serde(&ProcessImageParams {
             bg: vec![],
             dx: 0.0,

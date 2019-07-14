@@ -63,11 +63,12 @@ The source image is cropped in order to ensure that the full _width_ and _height
 
 ![fill mode](docs/images/fill.png)
 
-Example:
+Examples:
 
-[http://.../image.png?<br/>mode=fill&<br/>width=200&<br/>height=200&<br/>origin=https://.../test_pattern.png](http://factorymethod.uk/image.png?mode=fill&width=200&height=200&origin=http://factorymethod.uk/test_pattern.png)
-
-![fill example](http://factorymethod.uk/image.png?mode=fill&width=200&height=200&origin=http://factorymethod.uk/test_pattern.png)
+| URL                                                                                                                                                                                                                               | Image                                                                                                                              |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| [https://.../image.png?<br/>mode=fill&<br/>width=180&<br/>height=200&<br/>origin=https://.../test_pattern.png](https://factorymethod.uk/image.png?mode=fill&width=180&height=200&origin=http://factorymethod.uk/test_pattern.png) | ![fill example](https://factorymethod.uk/image.png?mode=fill&width=180&height=200&origin=http://factorymethod.uk/test_pattern.png) |
+| [https://.../image.jpg?<br/>mode=fill&<br/>width=180&<br/>height=200&<br/>origin=https://.../Apollo_17.jpeg](https://factorymethod.uk/image.png?mode=fill&width=180&height=200&origin=http://factorymethod.uk/Apollo_17.jpeg)     | ![fill example](https://factorymethod.uk/image.jpeg?mode=fill&width=180&height=200&origin=http://factorymethod.uk/Apollo_17.jpeg)  |
 
 ### Fit mode
 
@@ -75,11 +76,13 @@ The output image is exactly sized according to the given width and height, with 
 
 ![fit mode](docs/images/fit.png)
 
-Example:
+Examples:
 
-[http://.../image.png?<br/>mode=fit&<br/>bg=666&<br/>width=200&<br/>height=200&<br/>origin=https://.../test_pattern.png](http://factorymethod.uk/image.png?bg=666&mode=fit&width=200&height=200&origin=http://factorymethod.uk/test_pattern.png)
-
-![fill example](http://factorymethod.uk/image.png?bg=666&mode=fit&width=200&height=200&origin=http://factorymethod.uk/test_pattern.png)
+| URL                                                                                                                                                                                                                                                                                                                      | Image                                                                                                                                                |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [https://.../image.png?<br/>mode=fit&<br/>width=180&<br/>height=200&<br/>bg=abc&<br/>origin=https://.../test_pattern.png](https://factorymethod.uk/image.png?mode=fit&width=180&height=200&bg=abc&origin=http://factorymethod.uk/test_pattern.png)                                                                       | ![fit example](https://factorymethod.uk/image.png?mode=fit&width=180&height=200&bg=abc&origin=http://factorymethod.uk/test_pattern.png)              |
+| [https://.../image.jpg?<br/>mode=fit&<br/>width=180&<br/>height=200&<br/>bg=abc&<br/>origin=https://.../Apollo_17.jpeg](https://factorymethod.uk/image.png?mode=fit&width=180&height=200&bg=abc&origin=http://factorymethod.uk/Apollo_17.jpeg)                                                                           | ![fit example](https://factorymethod.uk/image.jpeg?mode=fit&width=180&height=200&bg=abc&origin=http://factorymethod.uk/Apollo_17.jpeg)               |
+| Scaled up and cropped to bottom-left<br/>[https://.../image.jpg?<br/>mode=fit&<br/>width=180&<br/>height=200&<br/>scale=1.5&<br/>dx=-1&dy=1&<br/>origin=https://.../Apollo_17.jpeg](https://factorymethod.uk/image.png?mode=fit&width=180&height=200&dx=-1&dy=1&scale=1.5&origin=http://factorymethod.uk/Apollo_17.jpeg) | ![fit example](https://factorymethod.uk/image.jpeg?mode=fit&width=180&height=200&dx=-1&dy=1&scale=1.5&origin=http://factorymethod.uk/Apollo_17.jpeg) |
 
 ### Limit mode
 
@@ -87,11 +90,13 @@ The source image is scaled to fit within the given _width_ and _height_.
 
 ![limit mode](docs/images/limit.png)
 
-Example:
+Examples:
 
-[http://.../image.png?<br/>mode=limit&<br/>width=200&<br/>height=200&<br/>origin=https://.../test_pattern.png](http://factorymethod.uk/image.png?mode=limit&width=200&height=200&origin=http://factorymethod.uk/test_pattern.png)
-
-![limit example](http://factorymethod.uk/image.png?mode=limit&width=200&height=200&origin=http://factorymethod.uk/test_pattern.png)
+| URL                                                                                                                                                                                                                                                                                                                          | Image                                                                                                                                                    |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [https://.../image.png?<br/>mode=limit&<br/>width=180&<br/>height=200&<br/>origin=https://.../test_pattern.png](https://factorymethod.uk/image.png?mode=limit&width=180&height=200&&origin=http://factorymethod.uk/test_pattern.png)                                                                                         | ![limit example](https://factorymethod.uk/image.png?mode=limit&width=180&height=200&origin=http://factorymethod.uk/test_pattern.png)                     |
+| [https://.../image.jpg?<br/>mode=limit&<br/>width=180&<br/>height=200&<br/>origin=https://.../Apollo_17.jpeg](https://factorymethod.uk/image.png?mode=limit&width=180&height=200&&origin=http://factorymethod.uk/Apollo_17.jpeg)                                                                                             | ![limit example](https://factorymethod.uk/image.jpeg?mode=limit&width=180&height=200&origin=http://factorymethod.uk/Apollo_17.jpeg)                      |
+| Scaled up and cropped to bottom-left<br/>[https://.../image.jpg?<br/>mode=limit&<br/>width=180&<br/>height=200&<br/>scale=1.5&<br/>dx=-1&dy=1&<br/>origin=https://.../Apollo_17.jpeg](https://factorymethod.uk/image.png?mode=limit&width=180&height=200&dx=-1&dy=1&scale=1.5&origin=http://factorymethod.uk/Apollo_17.jpeg) | ![limit example](https://factorymethod.uk/image.jpeg?mode=limit&width=180&height=200&dx=-1&dy=1&scale=1.5&origin=http://factorymethod.uk/Apollo_17.jpeg) |
 
 ## Limitations
 
